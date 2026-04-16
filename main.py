@@ -1,5 +1,7 @@
 import sqlite3
 import html
+import subprocess
+import os
 from pathlib import Path
 
 def write_rows(rows, formatter, output=None):
@@ -82,14 +84,14 @@ def latex_escape(text):
 
 def latex_preamble(f):
     # 18/03/2026. Added function to generate preamble for LaTeX file to reduce size of export_latex_file()
+    # 15/04/2026. Removed instruction to include fontenc as it doesn't work with pdflatex.
     f.write("\\documentclass[a4paper,oneside]{slides}\n")
     f.write("\\usepackage[utf8]{inputenc}\n")
     f.write("\\usepackage[T1]{fontenc}\n")
-    f.write("\\usepackage{fontspec}\n")
 
 def latex_top_matter(f):
     #18/03/2026. This function prints the top matter for the LaTeX file.
-    f.write("\\title{Flubb''s Reference}\n")
+    f.write("\\title{Flubb's Reference}\n")
     f.write("\\author{Phil Smith}\n")
     f.write("\\date{March 2026}\n")
     f.write("\\maketitle\n")
@@ -194,6 +196,45 @@ def export_latex_file(cols, rows, word_language, word_type):
         # Stuff at the foot of the document, again, maybe another function...
         f.write("\\end{document}\n")
 
+def export_pdf(cols, rows, word_language, word_type):
+    # 16/04/2026 This function looks for a LaTeX file, and converts it to a PDF.
+    # If the LaTeX file is not present, the function calls export_latex_file()
+    # and uses the arguments to generate such a file from a database query.
+    output_dir = Path("output")
+    output_dir.mkdir(exist_ok=True)
+
+    file_name = f"{word_language}_{word_type}"
+    file_path = output_dir / file_name
+
+    tex_file = file_path.with_suffix(".tex")
+
+    # Ensure .tex exists
+    if not tex_file.exists():
+        export_latex_file(cols, rows, word_language, word_type)
+
+    # Run pdflatex twice
+    for _ in range(2):
+        result = subprocess.run(
+            ["pdflatex", "-interaction=nonstopmode", tex_file.name],
+            cwd=output_dir,
+            capture_output=True,
+            text=True
+        )
+        if result.returncode != 0:
+            print("LaTeX compilation failed:")
+            print(result.stdout)
+            return False
+
+    # Clean up auxiliary files
+    for ext in [".log", ".aux"]:
+        aux_file = file_path.with_suffix(ext)
+        try:
+            aux_file.unlink()
+        except FileNotFoundError:
+            pass
+
+    return True
+    
 def export_html_file(cols, rows, word_language, word_type):
     # 20/03/2026 This finction takes the data that has been read into the
     # cursor variable and outputs it to an HTML document.
@@ -275,6 +316,7 @@ def get_output_type(cols, rows, word_language, word_type):
 
     options = [
         ("Plain text", export_text_file),
+        ("PDF", export_pdf),
         ("LaTeX", export_latex_file),
         ("HTML", export_html_file),
         ("Output to the screen", output_to_screen),

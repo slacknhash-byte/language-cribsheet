@@ -27,6 +27,7 @@ The program queries stored vocabulary and produces formatted output in multiple 
   * Plain text
   * HTML
   * LaTeX
+  * PDF
   * Console output
 * Language-aware formatting (e.g. handling grammatical gender and adjective forms)
 
@@ -38,6 +39,7 @@ The program queries stored vocabulary and produces formatted output in multiple 
 * SQLite
 * HTML (for web output)
 * LaTeX (for typeset documents)
+* pdflatex (for PDF export)
 
 ---
 
@@ -64,24 +66,26 @@ The program queries stored vocabulary and produces formatted output in multiple 
 
 ### Requirements
 
+* MiKTeX
 * Python 3.x
 
 ### Steps
 
 1. Clone the repository
-2. Ensure the database file is in place:
+2. Install MiKTeX if not already installed.
+3. Ensure the database file is in place:
 
 ```
 database/flubb.db
 ```
 
-3. Run the program:
+4. Run the program:
 
 ```
 python main.py
 ```
 
-4. Follow the prompts to select:
+5. Follow the prompts to select:
 
    * Language
    * Word type
@@ -102,6 +106,7 @@ Depending on selection, outputs may include:
 * `.txt` — plain text tables
 * `.html` — structured HTML documents
 * `.tex` — LaTeX source files
+* `.pdf` — Portable Document Files
 
 ---
 
