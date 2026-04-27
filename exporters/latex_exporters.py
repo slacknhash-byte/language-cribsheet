@@ -6,13 +6,13 @@ def export_latex_file(column_headers, data_rows, table_language, word_type):
     # 03/03/2026 This function takes the data that has been read into the
     # cursor variable and outputs it to a LaTeX file.
     # 18/03/2026 Spun off latex_preamble() and latex_top_matter()
-    # 19/03/2026 File output is based on the language and type of word.
+    # 27/04/2026 Switching from pdflatex to LuaLaTeX
     
     output_dir = Path("output")
     output_dir.mkdir(exist_ok=True)
     file_name = f"{table_language}_{word_type}.tex"
     file_path = output_dir / file_name
-    with open(file_path,"w",encoding="utf-8-sig") as file_output:
+    with open(file_path,"w",encoding="utf-8") as file_output:
         latex_preamble(file_output)
         file_output.write("\\begin{document}\n") # keep \begin and \end on same line       
         latex_top_matter(file_output)
@@ -47,12 +47,8 @@ def latex_preamble(file_output):
 # 18/03/2026. Added function to generate preamble for LaTeX file to reduce size of export_latex_file()
 # 15/04/2026. Removed instruction to include fontenc as it doesn't work with pdflatex.
     file_output.write("\\documentclass[a4paper,oneside]{slides}\n")
-    file_output.write("\\usepackage{longtable}\n")
-    file_output.write("\\usepackage[utf8]{inputenc}\n")
-    file_output.write("\\usepackage[T1]{fontenc}\n")
-    
-# 19/04/2026. The time's come to abandon pdflatex, in order to allow more work with fonts.
-#f.write("\\usepackage{fontspec}\n")
+    file_output.write("\\usepackage{longtable}\n")  
+    file_output.write("\\usepackage{fontspec}\n")
 
 def latex_top_matter(file_output):
 #18/03/2026. This function prints the top matter for the LaTeX file.

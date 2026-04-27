@@ -8,6 +8,7 @@ def export_pdf(column_headers, data_rows, word_language, word_type):
     # 16/04/2026 This function looks for a LaTeX file, and converts it to a PDF.
     # If the LaTeX file is not present, the function calls export_latex_file()
     # and uses the arguments to generate such a file from a database query.
+    # 27/04/2026 Switching from pdflatex to LuaLaTeX.
     output_dir = Path("output")
     output_dir.mkdir(exist_ok=True)
 
@@ -20,11 +21,11 @@ def export_pdf(column_headers, data_rows, word_language, word_type):
     if not tex_file.exists():
         export_latex_file(column_headers, data_rows, word_language, word_type)
 
-    # Run pdflatex twice
-    # THIS WILL HAVE TO CHANGE AS WE'RE NOT USING PDFLATEX ANY MORE
+    # Run LuaLaTeX twice
+
     for _ in range(2):
         result = subprocess.run(
-            ["pdflatex", "-interaction=nonstopmode", tex_file.name],
+            ["lualatex", "-interaction=nonstopmode", tex_file.name],
             cwd=output_dir,
             capture_output=True,
             text=True

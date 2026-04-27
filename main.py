@@ -10,7 +10,7 @@ from exporters.latex_exporters import export_latex_file
 from exporters.pdf_exporters import export_pdf
 from exporters.screen_exporters import output_to_screen
 
-##########################################################################
+#####
 
 def get_values():
     # 05/03/26 Added validation for language and word type.
@@ -55,6 +55,7 @@ def get_output_type(cols, rows, word_language, word_type):
             func(cols, rows, word_language, word_type)
 
 #####
+            
 if __name__ == "__main__":
     word_language, word_type = get_values()
     rows, cols = run_query(word_language,word_type)
