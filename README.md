@@ -28,6 +28,7 @@ The program queries stored vocabulary and produces formatted output in multiple 
   * HTML
   * LaTeX
   * PDF
+  * CSV
   * Console output
 * Language-aware formatting (e.g. handling grammatical gender and adjective forms)
 
@@ -107,6 +108,7 @@ Depending on selection, outputs may include:
 * `.html` — structured HTML documents
 * `.tex` — LaTeX source files
 * `.pdf` — Portable Document Files
+* `.csv` — Comma Separated Values
 
 ---
 
@@ -116,10 +118,21 @@ Depending on selection, outputs may include:
 database/
     flubb.db
 
+exporters/
+	(functions for exportation to different file formats)
+	
+formatters/
+	(functions for the formatting of text for various formats)
+
 output/
     (generated files)
 
+utils/
+	(functions to change field names to something more meaningful, and escape out problematic characters)
+
+database.py
 main.py
+
 ```
 
 ---

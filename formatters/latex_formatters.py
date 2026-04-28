@@ -1,3 +1,6 @@
+# This file contains functions for the formatting of output as
+# a table in LaTeX format (.tex)
+
 from utils.headers import clean_heading, get_language
 from utils.escapers import latex_escape
 

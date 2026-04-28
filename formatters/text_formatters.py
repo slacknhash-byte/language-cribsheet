@@ -1,3 +1,6 @@
+# This file contains functions for the formatting of output as
+# a table in plain text format (.txt)
+
 from utils.headers import clean_heading, get_language
 
 def format_text(row, col_widths=None, column_langs=None, is_header=False, lang=None):

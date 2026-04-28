@@ -1,6 +1,8 @@
+# This file contains functions for the formatting of output as
+# table cells in HTML format
+
 from utils.headers import clean_heading, get_language
 from utils.escapers import html_escape_quotes
-
 
 def format_html(row, col_widths=None, column_langs=None, is_header=False, lang=None):
     if is_header:

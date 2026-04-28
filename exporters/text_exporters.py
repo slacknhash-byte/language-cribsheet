@@ -7,16 +7,14 @@ def export_text_file(column_headers, data_rows, table_language, word_type):
     # cursor variable and outputs it to a text file, inserting a tab between each
     # field and a carriage return and newline after each record.
     # Updated 18/03/2026. Removed loop, added write_rows() call.
-    # 19/03/2026 File output is based on the language and type of word.
+    # 19/03/2026 File output name is based on the language and type of word.
+    # 25/04/2026 Removed write_rows(), added write_table()
     
     output_dir = Path("output")
     output_dir.mkdir(exist_ok=True)    
     file_name = f"{table_language}_{word_type}.txt"
     file_path = output_dir / file_name
     with open(file_path,"w",encoding="utf-8-sig") as file_output:
-     
-        #tabular data
-        # Column header should go here
         col_count = len(data_rows[0])
         column_widths = [
             max(
