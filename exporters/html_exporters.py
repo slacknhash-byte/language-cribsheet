@@ -2,6 +2,7 @@ from pathlib import Path
 from formatters.html_formatters import format_html
 from exporters.common_exporters import write_table
 from utils.headers import get_language
+from utils.titles import document_title, build_codename
 
 def export_html_file(column_headers, data_rows, table_language, word_type):
     # 20/03/2026 This finction takes the data that has been read into the
@@ -31,10 +32,13 @@ def html_head(file_output, table_language, word_type):
 def html_body(file_output, table_language, word_type, column_headers, data_rows):
     # 20/03/2026 This function outputs the <body> element and its contents
     # for the HTML file
+    # 25/04/2026 Updated to include table_write()
+    # 30/04/2025 Updated to include build_codename()
     file_output.write("<body>\n")
     file_output.write("<header></header>\n")
     file_output.write("<nav></nav>\n")
     file_output.write("<main>\n")
+    file_output.write(f"<h1>{document_title(table_language, word_type)}</h1>\n")
     file_output.write(f"<table id=\"{table_language}_{word_type}\">\n")
     file_output.write(f"\t<caption>{get_language(table_language)} {word_type.capitalize()}s</caption>\n")    
     cell_languages = build_cell_languages(table_language, word_type, len(column_headers))    
@@ -42,7 +46,9 @@ def html_body(file_output, table_language, word_type, column_headers, data_rows)
     file_output.write("\n\t</tbody>\n\t<tfoot>\n\t<tr></tr>\n\t</tfoot>\n")
     file_output.write("</table>\n")
     file_output.write("</main>\n")
-    file_output.write("<footer></footer>\n")
+    file_output.write("<footer>\n\t<p class=\"codename\">")
+    file_output.write(f"Reference Number: {build_codename(table_language,word_type)}")
+    file_output.write("</p>\n</footer>\n")
     file_output.write("</body>\n")
 
 def build_cell_languages(table_language, word_type, row_length):

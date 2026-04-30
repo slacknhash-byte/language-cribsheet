@@ -1,6 +1,7 @@
 from pathlib import Path
 from formatters.text_formatters import format_text
 from exporters.common_exporters import write_table
+from utils.titles import document_title, build_codename
 
 def export_text_file(column_headers, data_rows, table_language, word_type):
     # 02/03/2026 This function takes the data that has been read into the
@@ -9,7 +10,7 @@ def export_text_file(column_headers, data_rows, table_language, word_type):
     # Updated 18/03/2026. Removed loop, added write_rows() call.
     # 19/03/2026 File output name is based on the language and type of word.
     # 25/04/2026 Removed write_rows(), added write_table()
-    
+    # 29/04/2026 Added document_title()
     output_dir = Path("output")
     output_dir.mkdir(exist_ok=True)    
     file_name = f"{table_language}_{word_type}.txt"
@@ -23,5 +24,6 @@ def export_text_file(column_headers, data_rows, table_language, word_type):
             )
             for i in range(col_count)
         ]
-       
+        file_output.write(f"{document_title(table_language, word_type)}\n\n")
         write_table(data_rows, column_headers, format_text, file_output, column_widths, None, table_language)
+        file_output.write(f"Reference Number: {build_codename(table_language,word_type)}")

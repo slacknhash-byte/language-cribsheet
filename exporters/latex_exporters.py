@@ -1,12 +1,15 @@
 from pathlib import Path
 from formatters.latex_formatters import format_latex
 from exporters.common_exporters import write_table, write_rows_only
+from utils.escapers import latex_escape
+from utils.titles import document_title, build_codename
 
 def export_latex_file(column_headers, data_rows, table_language, word_type):
     # 03/03/2026 This function takes the data that has been read into the
     # cursor variable and outputs it to a LaTeX file.
     # 18/03/2026 Spun off latex_preamble() and latex_top_matter()
     # 27/04/2026 Switching from pdflatex to LuaLaTeX
+    # 29/04/2025 added reference to document_title()
     
     output_dir = Path("output")
     output_dir.mkdir(exist_ok=True)
@@ -16,6 +19,7 @@ def export_latex_file(column_headers, data_rows, table_language, word_type):
         latex_preamble(file_output)
         file_output.write("\\begin{document}\n") # keep \begin and \end on same line       
         latex_top_matter(file_output)
+        file_output.write("\\section*{"+latex_escape(document_title(table_language, word_type))+"}\n")
         file_output.write("\\begin{longtable}")
         file_output.write(latex_format_columns(word_type, table_language))
 
@@ -41,6 +45,10 @@ def export_latex_file(column_headers, data_rows, table_language, word_type):
         )
 
         file_output.write("\\end{longtable}\n")
+        file_output.write("\\vfill\n")
+        file_output.write("\\begin{center}\n")
+        file_output.write(f"\\small {{{build_codename(table_language, word_type)}}}\n")
+        file_output.write("\\end{center}\n")
         file_output.write("\\end{document}\n")
 
 def latex_preamble(file_output):
