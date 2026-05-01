@@ -29,6 +29,7 @@ The program queries stored vocabulary and produces formatted output in multiple 
   * LaTeX
   * PDF
   * CSV
+  * Markdown
   * Console output
 * Language-aware formatting (e.g. handling grammatical gender and adjective forms)
 
@@ -40,7 +41,7 @@ The program queries stored vocabulary and produces formatted output in multiple 
 * SQLite
 * HTML (for web output)
 * LaTeX (for typeset documents)
-* pdflatex (for PDF export)
+* LoaLaTeX (for PDF export)
 
 ---
 
@@ -109,6 +110,7 @@ Depending on selection, outputs may include:
 * `.tex` — LaTeX source files
 * `.pdf` — Portable Document Files
 * `.csv` — Comma Separated Values
+* `.md` — text with markdown 
 
 ---
 

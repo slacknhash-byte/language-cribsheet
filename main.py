@@ -1,5 +1,6 @@
 # Refactored 27/04/2026 to allow easier addition of more output formats.
 # Updated 28/04/2026: CSV format export.
+# Updated 01/05/2025: Markdown format export.
 
 import os
 from database import run_query, generate_query
@@ -13,6 +14,7 @@ from exporters.latex_exporters import export_latex_file
 from exporters.pdf_exporters import export_pdf
 from exporters.screen_exporters import output_to_screen
 from exporters.csv_exporters import export_csv_file
+from exporters.markdown_exporters import export_markdown_file
 #####
 
 def get_values():
@@ -43,6 +45,7 @@ def get_output_type(cols, rows, word_language, word_type):
         ("PDF", export_pdf),
         ("LaTeX", export_latex_file),
         ("HTML", export_html_file),
+        ("Markdown", export_markdown_file),
         ("Output to the screen", output_to_screen),
     ]
 
