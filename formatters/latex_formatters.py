@@ -7,7 +7,7 @@ from utils.escapers import latex_escape
 def format_latex(row, col_widths=None, column_langs=None, is_header=False, lang=None):
     if is_header:
         return " & ".join(
-            f"\\textbf{{{clean_heading(col, lang).capitalize()}}}"
+            f"\\textsf{{{clean_heading(col, lang).upper()}}}"
             for col in row
         ) + " \\\\"
     else:

@@ -37,13 +37,13 @@ def get_values():
     
 
 def get_output_type(cols, rows, word_language, word_type):
-    print("What format of reference sheet do you want?\n")
+    print("What format of reference sheet do you want?\nAnswer Y or N to each option.\n")
 
     options = [
         ("Plain text", export_text_file),
         ("Comma-Separated Values (CSV)", export_csv_file),
+        ("LaTeX (needed for PDF)", export_latex_file),
         ("PDF", export_pdf),
-        ("LaTeX", export_latex_file),
         ("HTML", export_html_file),
         ("Markdown", export_markdown_file),
         ("Output to the screen", output_to_screen),

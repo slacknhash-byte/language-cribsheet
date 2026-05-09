@@ -19,7 +19,9 @@ def export_latex_file(column_headers, data_rows, table_language, word_type):
         latex_preamble(file_output)
         file_output.write("\\begin{document}\n") # keep \begin and \end on same line       
         latex_top_matter(file_output)
-        file_output.write("\\section*{"+latex_escape(document_title(table_language, word_type))+"}\n")
+        file_output.write("\\section{")
+        file_output.write(latex_escape(document_title(table_language, word_type)))
+        file_output.write("}\n")
         file_output.write("\\begin{longtable}")
         file_output.write(latex_format_columns(word_type, table_language))
 
@@ -30,11 +32,11 @@ def export_latex_file(column_headers, data_rows, table_language, word_type):
             lang=table_language
         )
         file_output.write(header_line + "\n")
-        file_output.write("\\endfirsthead\n")
+        file_output.write("\\hline\n\\endfirsthead\n")
 
         # header (subsequent pages)
         file_output.write(header_line + "\n")
-        file_output.write("\\endhead\n")
+        file_output.write("\\hline\n\\endhead\n")
 
         # actual data
         write_rows_only(
@@ -54,9 +56,11 @@ def export_latex_file(column_headers, data_rows, table_language, word_type):
 def latex_preamble(file_output):
 # 18/03/2026. Added function to generate preamble for LaTeX file to reduce size of export_latex_file()
 # 15/04/2026. Removed instruction to include fontenc as it doesn't work with pdflatex.
-    file_output.write("\\documentclass[a4paper,oneside]{slides}\n")
+    file_output.write("\\documentclass[a4paper,oneside]{article}\n")
     file_output.write("\\usepackage{longtable}\n")  
     file_output.write("\\usepackage{fontspec}\n")
+    file_output.write("\\setmainfont{Georgia}\n")
+    file_output.write("\\setsansfont{Inter}\n")
 
 def latex_top_matter(file_output):
 #18/03/2026. This function prints the top matter for the LaTeX file.
