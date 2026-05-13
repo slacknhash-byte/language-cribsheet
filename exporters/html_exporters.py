@@ -4,10 +4,11 @@ from exporters.common_exporters import write_table
 from utils.headers import get_language
 from utils.titles import document_title, build_codename
 
-def export_html_file(column_headers, data_rows, table_language, word_type):
+def export_html_file(column_headers, data_rows, table_language, word_type, flubb_version):
     # 20/03/2026 This function takes the data that has been read into the
     # cursor variable and outputs it to an HTML document.
     # 09/05/2026 Added create_stylesheet()
+    # 13/05/2026 Added flubb_version argument.
     
     output_dir = Path("output")
     output_dir.mkdir(exist_ok=True)
@@ -17,7 +18,7 @@ def export_html_file(column_headers, data_rows, table_language, word_type):
         file_output.write("<!doctype html>\n")
         file_output.write("<html lang=\"en\">\n")
         html_head(file_output, table_language, word_type)
-        html_body(file_output, table_language, word_type, column_headers, data_rows)
+        html_body(file_output, table_language, word_type, column_headers, data_rows, flubb_version)
         file_output.write("</html>\n")
     create_stylesheet()
 
@@ -85,11 +86,12 @@ def html_head(file_output, table_language, word_type):
     file_output.write(f"\t<title>Language Reference Sheet: {get_language(table_language)} {word_type}s</title>\n")
     file_output.write("</head>\n")
 
-def html_body(file_output, table_language, word_type, column_headers, data_rows):
+def html_body(file_output, table_language, word_type, column_headers, data_rows, flubb_version):
     # 20/03/2026 This function outputs the <body> element and its contents
     # for the HTML file
     # 25/04/2026 Updated to include table_write()
-    # 30/04/2025 Updated to include build_codename()
+    # 30/04/2026 Updated to include build_codename()
+    # 13/05/2026 Updated to add version coding in the footer.
     file_output.write("<body>\n")
     file_output.write("<header></header>\n")
     file_output.write("<nav></nav>\n")
@@ -103,7 +105,7 @@ def html_body(file_output, table_language, word_type, column_headers, data_rows)
     file_output.write("</table>\n")
     file_output.write("</main>\n")
     file_output.write("<footer>\n\t<p class=\"codename\">")
-    file_output.write(f"Reference Number: {build_codename(table_language,word_type)}")
+    file_output.write(f"Reference Number: {build_codename(table_language,word_type)} Version {flubb_version}")
     file_output.write("</p>\n</footer>\n")
     file_output.write("</body>\n")
 

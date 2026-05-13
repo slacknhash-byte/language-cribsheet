@@ -37,6 +37,7 @@ def get_values():
     
 
 def get_output_type(cols, rows, word_language, word_type):
+    flubb_version = "0.4" # Expect to move this to metadata.py eventually
     print("What format of reference sheet do you want?\nAnswer Y or N to each option.\n")
 
     options = [
@@ -59,7 +60,7 @@ def get_output_type(cols, rows, word_language, word_type):
 
     for label, func in options:
         if ask_yes_no(label):
-            func(cols, rows, word_language, word_type)
+            func(cols, rows, word_language, word_type, flubb_version)
 
 #####
             
